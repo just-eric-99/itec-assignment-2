@@ -1,0 +1,65 @@
+which area are you staying in Hong Kong
+- show a map of Hong Kong
+    - divide the map into 18 districts 
+    - divide the map into 3 districts
+
+    - potential graph
+        - https://www.amcharts.com/demos/us-heat-map/
+
+New Territories
+// {"HK-IS",  "Islands} 離島區
+// {"HK-KI",  "Kwai Tsing} 葵青區
+// {"HK-NO",  "North} 北區
+// {"HK-SK",  "Sai Kung} 西貢區
+// {"HK-ST",  "Sha Tin} 沙田區
+// {"HK-TP",  "Tai Po} 大埔區
+// {"HK-TW",  "Tsuen Wan} 荃灣區
+// {"HK-TM",  "Tuen Mun} 屯門區
+// {"HK-YL",  "Yuen Long} 元朗區
+
+Kowloon
+// {"HK-KC",  "Kowloon City} 九龍城區
+// {"HK-KU",  "Kwun Tong} 觀塘區
+// {"HK-SS",  "Sham Shui Po} 深水埗區
+// {"HK-WT",  "Wong Tai Sin} 黃大仙區
+// {"HK-YT",  "Yau Tsim Mong} 油尖旺區
+
+
+Hong Kong Island
+// {"HK-CW",  "Central and Western} 中西區
+// {"HK-EA",  "Eastern} 東區
+// {"HK-SO",  "Southern} 南區
+// {"HK-WC",  "Wan Chai} 灣仔區
+
+
+// survey questions
+
+1. Which area of Hong Kong do you live in?
+    - https://observablehq.com/@d3/zoom-to-bounding-box
+
+2a. What is your monthly spending on food?
+2b. What is your monthly spending on transportation?
+2c. What is your monthly spending on housing?
+2d. What is your monthly spending on entertainment?
+2e. What is your monthly spending on other expenses?
+
+3. Pineapple on Pizza? (Yes/No)
+    - https://www.youtube.com/watch?v=QX4Z3JuaOqA 
+
+4. What is the first english word comes to mind when you think of Hong Kong?
+    - https://www.amcharts.com/demos/word-cloud/
+    - https://observablehq.com/@d3/word-cloud
+
+5a. Gender 
+5b. Kiss Kill Marry 
+    - Taylor Swift
+    - Ariana Grande
+    - Emma Watson
+
+Would you rather lose both legs, both arms, or one of each?
+
+
+
+
+
+generate a 1000 word story why i want to be a policeman in plain text
