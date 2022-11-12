@@ -1,3 +1,5 @@
+var locationData = [];
+var polygonSeries;
 zh_hk = {
     "HK-IS": "離島區",
     "HK-KI": "葵青區",
@@ -23,7 +25,7 @@ am5.ready(function () {
 
     // Create root element
     // https://www.amcharts.com/docs/v5/getting-started/#Root_element
-    var root = am5.Root.new("chartdiv2");
+    var root = am5.Root.new("chartdiv");
 
     // Set themes
     // https://www.amcharts.com/docs/v5/concepts/themes/
@@ -48,7 +50,7 @@ am5.ready(function () {
 
     // Create polygon series for continents
     // https://www.amcharts.com/docs/v5/charts/map-chart/map-polygon-series/
-    var polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
+    polygonSeries = chart.series.push(am5map.MapPolygonSeries.new(root, {
         calculateAggregates: true,
         valueField: "value"
     }));
@@ -102,20 +104,10 @@ am5.ready(function () {
         am5.net.load("https://cdn.amcharts.com/lib/5/geodata/json/" + currentMap + ".json", chart).then(function (result) {
             console.log("https://cdn.amcharts.com/lib/5/geodata/json/" + currentMap + ".json");
             var geodata = am5.JSONParser.parse(result.response);
-            var data = [];
 
-
-            // fake data: fix later
-            for (var i = 0; i < geodata.features.length; i++) {
-                data.push({
-                    id: geodata.features[i].id,
-                    value: 0,
-                    name: geodata.features[i].properties.name,
-                    zh_name: geodata.features[i].properties.name + " (" + zh_hk[geodata.features[i].id] + ")"
-                });
-            }
+            
             polygonSeries.set("geoJSON", geodata);
-            polygonSeries.data.setAll(data)
+            polygonSeries.data.setAll(locationData)
         });
 
         chart.seriesContainer.children.push(am5.Label.new(root, {
@@ -156,5 +148,7 @@ am5.ready(function () {
         heatLegend.set("startValue", polygonSeries.getPrivate("valueLow"));
         heatLegend.set("endValue", polygonSeries.getPrivate("valueHigh"));
     });
+
+    
 
 });

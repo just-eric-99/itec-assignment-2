@@ -3,73 +3,237 @@
 
 <head>
     <title>ITEC2016 Assigment 2</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3.layout.cloud.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div class="container">
-
-        <div class="row" style="height: 1000px;">
-            <div class="col-md-6 col-xl-6">
-
-                <form action="">
-
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect1">What is your gender?</label>
-                        <select class="form-control" id="gender">
-                            <option>Male</option>
-                            <option>Female</option>
+    <div class="container" style="padding-top: 50px;">
+        <div class="row">
+            <div class="col-md-6 col-xl-6" style="height: 1050px;">
+                <legend>Random Questions</legend>
+                <form action="/form" method="POST" onsubmit="postWithAjax(this);return false;">
+                    <div class="mb-3">
+                        <span>Which area of Hong Kong do you live in?</span>
+                        <select class="form-select" name="area" onchange="areaSelected(this.value)" required>
+                            <option value="">Please select an area:</option>
+                            <option value="New Territories">New Territories</option>
+                            <option value="Kowloon">Kowloon</option>
+                            <option value="Hong Kong Island">Hong Kong Island</option>
                         </select>
                     </div>
 
+                    <div class="mb-3">
+                        <label for="districts"> Which district of above area do you live in?</label>
+                        <select class="form-select" name="districts" id="districts"></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <span>Which region of do you wanna travel the most?</span>
+                        <select class="form-select" name="region" onchange="regionSelected(this.value)" required>
+                            <option value="">Please select a team:</option>
+                            <option value="Asia">Asia</option>
+                            <option value="Middle East, North Africa, and Greater Arabia">Middle East, North Africa,
+                                and
+                                Greater Arabia</option>
+                            <option value="Europe">Europe</option>
+                            <option value="North America">North America</option>
+                            <option value="Central America and the Caribbean">Central America and the Caribbean
+                            </option>
+                            <option value="South America">South America</option>
+                            <option value="Oceania">Oceania</option>
+                            <option value="Africa">Africa</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <span>Select a country from selected region: </span>
+                        <select class="form-select" name="country" id="country" required></select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="pineappleOnPizza">Hostest topic of all time: Pineapple ON Pizza? </label>
+                        <span>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pineappleOnPizza" value="Yes"
+                                    required>
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    YAYYYYYY
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="pineappleOnPizza" value="No">
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    NAHHHHHH
+                                </label>
+                            </div>
+                        </span>
+                    </div>
+
+                    <div class="submit">
+                        <input type="submit" value="Submit" class="btn btn-primary">
+                    </div>
 
                 </form>
-
-
             </div>
+
             <div class="col-md-6 col-xl-6">
-                <div class="container">
-                    <!-- q1 -->
-                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h3"
-                        id="ability" style="padding: 20px; text-shadow: 2px 2px grey;">
-                        Which district people live in Hong Kong?
-                    </div>
-                    <div class="row">
-                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
-                            <div class="container" id="chartdiv2"
-                                style="height: 300px; padding: 10px; margin-bottom: 15px;"> </div>
+                <div id="carouselExampleControls" class="carousel slide carousel-dark" data-bs-ride="carousel">
+
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="2000">
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h4"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Which district people live in Hong Kong?
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="2000">
+
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h4"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Which country do people wanna travel the most?
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv2"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="carousel-item" data-bs-interval="2000">
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h4"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Pineapple on Pizza?
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv3"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
-                    <!-- q2 -->
-                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h3"
-                        id="ability" style="padding: 20px; text-shadow: 2px 2px grey">
-                        Maps
-                    </div>
-                    <div class="row">
-                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
-                            <div class="container" id="chartdiv2"
-                                style="height: 300px; padding: 10px; margin-bottom: 15px;"> </div>
-                        </div>
-                    </div>
-
-
-
-
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="false"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="false"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
             </div>
+            <!-- 
+            <div class="col-md-6 col-xl-6">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h3"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Which district people live in Hong Kong?
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h3"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Which country do people wanna travel the most?
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv2"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="card" style="padding-left: 10px; padding-right: 10px;">
+                                <div class="card-body">
+                                    <div class="container text-center shadow-1-strong justify-content-center align-items-center h3"
+                                        style="padding: 20px; text-shadow: 2px 2px grey;">
+                                        Pineapple on Pizza?
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12 " style="border: 1px solid grey; padding: auto;">
+                                            <div class="container" id="chartdiv3"
+                                                style="height: 350px; padding: 10px; margin-bottom: 15px;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
 
         </div>
-
     </div>
 
     <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/map.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/data/countries2.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/hierarchy.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/wc.js"></script>
+    <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
     <script src="/javascripts/locationAmChartV5.js"></script>
+    <script src="/javascripts/favCountries.js"></script>
+    <script src="/javascripts/ajaxRequest.js"></script>
+    <script src="/javascripts/regionSelected.js"></script>
+    <script src="/javascripts/pineapplePizza.js"></script>
+    <script src="/javascripts/areaSelected.js"></script>
 
 </body>
 
