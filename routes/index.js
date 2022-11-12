@@ -25,8 +25,6 @@ router.get('/', function(req, res, next) {
 /* Handle the Form */
 router.post('/form', function (req, res, next) {
 
-  console.log(req.body);
-
   db.getCollection("submissions").insert(req.body);
 
   let result = db.getCollection("submissions").find();
@@ -34,5 +32,13 @@ router.post('/form', function (req, res, next) {
   res.json(result);
 });
 
+/* Get submission data */
+router.get('/data', function (req, res, next) {
+
+  let result = db.getCollection("submissions").find();
+
+  res.json(result);
+
+});
 
 module.exports = router;
